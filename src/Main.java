@@ -25,14 +25,16 @@ public class Main {
 		Arrays.sort(houses);
 		
 		int hoseLow=0;
-		int hoseHigh=(circ/k+1)/2;
+		int hoseHigh=circ/2;
 		int hoseTry = (hoseHigh+hoseLow)/2;
-		
+		int success=0;
 		while (true) {
 			if (canCover(hoseTry)) {
 				hoseHigh=hoseTry-1;
+				success=hoseTry;
 			} else {
 				hoseLow=hoseTry+1;
+				
 			}
 			if (hoseHigh-hoseLow<0) {
 				break;
@@ -40,7 +42,7 @@ public class Main {
 				hoseTry=(hoseHigh+hoseLow)/2;
 			}
 		}
-		System.out.println(hoseTry);
+		System.out.println(success);
 	}
 	
 	private static boolean canCover(int hoseTry) {
@@ -88,11 +90,11 @@ public class Main {
 			} else if (distance>hoseCover) {
 				high = middle-1;
 				if (low>high) 
-					return low-1;
+					return (low-1)%h;
 			} else {
 				low=middle+1;
 				if (low>high) 
-					return low-1;
+					return middle%h;
 			}
 		}
 		
