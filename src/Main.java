@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -8,15 +11,16 @@ public class Main {
 	static int[] houses;
 	static int circ=1000000;
 	static HashMap<Parameter, Integer> cache=new HashMap<>();
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NumberFormatException, IOException {
 		// TODO Auto-generated method stub
-		Scanner sc = new Scanner(System.in);
-		h=sc.nextInt();
+		
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		h=Integer.parseInt(reader.readLine());
 		houses = new int[h];
 		for (int i=0;i<h;i++) {
-			houses[i] = sc.nextInt();
+			houses[i] = Integer.parseInt(reader.readLine());
 		}
-		k=sc.nextInt();
+		k=Integer.parseInt(reader.readLine());
 		
 		Arrays.sort(houses);
 		
