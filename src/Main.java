@@ -10,7 +10,7 @@ public class Main {
 	static int h,k;
 	static int[] houses;
 	static int circ=1000000;
-	static HashMap<Parameter, Integer> cache;
+	static HashMap<Parameter, Integer> cache=new HashMap<>();
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		// TODO Auto-generated method stub
 		
@@ -78,7 +78,11 @@ public class Main {
 		int distance = (ea-sa+circ)%circ;
 		if (distance<=hoseCover) return high;
 
+		Parameter key=new Parameter(low,high,hoseTry);
+		if (cache.containsKey(key))
+			return cache.get(key);
 		
+		int success = 0;
 		while (true) {
 			int middle = (high+low)/2;
 
@@ -86,17 +90,23 @@ public class Main {
 			distance = (ma-sa+circ)%circ;
 
 			if (distance==hoseCover) {
-				return middle%h;
+				success = middle%h;
+				break;
 			} else if (distance>hoseCover) {
 				high = middle-1;
-				if (low>high) 
-					return (low-1)%h;
+				if (low>high) {
+					break;
+				}
 			} else {
+				success = middle;
 				low=middle+1;
-				if (low>high) 
-					return middle%h;
+				if (low>high) {
+					break;
+				}
 			}
 		}
+		cache.put(key, success);
+		return success;
 		
 	}
 	
@@ -109,4 +119,32 @@ class Parameter {
 		end=e;
 		this.n=n;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + end;
+		result = prime * result + n;
+		result = prime * result + start;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Parameter other = (Parameter) obj;
+		if (end != other.end)
+			return false;
+		if (n != other.n)
+			return false;
+		if (start != other.start)
+			return false;
+		return true;
+	}
+	
+	
 }
